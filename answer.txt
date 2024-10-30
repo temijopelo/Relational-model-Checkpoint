@@ -1,0 +1,62 @@
+Gymnasium
+-----------
+GymID (PK)      INT
+Name            VARCHAR(100)
+Address         VARCHAR(200)
+PhoneNumber     VARCHAR(15)
+
+
+Member
+-----------
+MemberID (PK)   INT
+LastName        VARCHAR(50)
+FirstName       VARCHAR(50)
+Address         VARCHAR(200)
+DateOfBirth     DATE
+Gender          VARCHAR(10)
+GymID (FK)      INT
+
+
+Coach
+-----------
+CoachID (PK)    INT
+LastName        VARCHAR(50)
+FirstName       VARCHAR(50)
+Age             INT
+Specialty       VARCHAR(50)
+
+
+Session
+-----------
+SessionID (PK)  INT
+SportType       VARCHAR(50)
+Schedule        TIMESTAMP
+
+
+Registration
+-------------------------
+RegistrationID (PK)  INT
+MemberID (FK)        INT
+SessionID (FK)       INT
+RegistrationDate     DATE
+
+
+SessionCoach
+-------------------------
+SessionCoachID (PK)   INT
+SessionID (FK)        INT
+CoachID (FK)          INT
+
+
+Relational Diagram Overview
+Gymnasium (GymID, Name, Address, PhoneNumber)
+    | GymID (FK)
+    |
+Member (MemberID, LastName, FirstName, Address, DateOfBirth, Gender, GymID)
+
+Session (SessionID, SportType, Schedule)
+    | SessionID (FK)           | SessionID (FK)
+    |                          |
+Registration (RegistrationID, MemberID, SessionID, RegistrationDate)   SessionCoach (SessionCoachID, SessionID, CoachID)
+                                                        
+Coach (CoachID, LastName, FirstName, Age, Specialty)
