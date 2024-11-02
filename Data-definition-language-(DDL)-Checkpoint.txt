@@ -1,0 +1,48 @@
+-- Creating the CUSTOMER table
+CREATE TABLE CUSTOMER (
+    CustomerID NUMBER PRIMARY KEY,
+    FirstName VARCHAR2(50) NOT NULL,
+    LastName VARCHAR2(50) NOT NULL,
+    Email VARCHAR2(100) UNIQUE NOT NULL,
+    PhoneNumber VARCHAR2(15),
+    Address VARCHAR2(200)
+);
+
+-- Creating the PRODUCT table
+CREATE TABLE PRODUCT (
+    ProductID NUMBER PRIMARY KEY,
+    ProductName VARCHAR2(100) NOT NULL,
+    Price NUMBER(10, 2) NOT NULL,
+    StockQuantity NUMBER DEFAULT 0,
+    SupplierID NUMBER,
+    FOREIGN KEY (SupplierID) REFERENCES SUPPLIER(SupplierID) -- Assuming a SUPPLIER table exists
+);
+
+-- Creating the ORDERS table
+CREATE TABLE ORDERS (
+    OrderID NUMBER PRIMARY KEY,
+    CustomerID NUMBER NOT NULL,
+    TotalAmount NUMBER(10, 2) NOT NULL,
+    OrderStatus VARCHAR2(20) DEFAULT 'Pending',
+    FOREIGN KEY (CustomerID) REFERENCES CUSTOMER(CustomerID)
+);
+
+-- Creating the ORDER_ITEMS table
+CREATE TABLE ORDER_ITEMS (
+    OrderItemID NUMBER PRIMARY KEY,
+    OrderID NUMBER NOT NULL,
+    ProductID NUMBER NOT NULL,
+    Quantity NUMBER NOT NULL CHECK (Quantity > 0),
+    PricePerUnit NUMBER(10, 2) NOT NULL,
+    FOREIGN KEY (OrderID) REFERENCES ORDERS(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES PRODUCT(ProductID)
+);
+
+Adding the Category Column to the PRODUCT Table
+ALTER TABLE PRODUCT
+ADD Category VARCHAR2(20);
+
+
+Adding the OrderDate Column to the ORDERS Table with Default SYSDATE
+ALTER TABLE ORDERS
+ADD OrderDate DATE DEFAULT SYSDATE;
